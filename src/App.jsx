@@ -12,24 +12,22 @@ const App = () => {
   useEffect(() => {
     const sketch = (p) => {
       p.setup = () => {
-        // Calculate available height: viewport height minus header, controls, footer, and padding
-        const headerHeight = 50; // Approximate height of header
-        const controlsHeight = 100; // Approximate height of controls (adjust as needed)
-        const footerHeight = 30; // Approximate height of footer
-        const padding = 40; // Total padding/margins
+        const headerHeight = 50;
+        const controlsHeight = 100;
+        const footerHeight = 30;
+        const padding = 40;
         const availableHeight =
           window.innerHeight -
           (headerHeight + controlsHeight + footerHeight + padding);
-        const size = Math.min(window.innerWidth * 0.9, availableHeight); // 90% of width or available height, whichever is smaller
+        const size = Math.min(window.innerWidth * 0.9, availableHeight);
         p.createCanvas(size, size);
         p.describe(
           `Dark grey canvas that reflects ${modeRef.current}s drawn within it in ${symmetryRef.current} sections.`,
         );
         p.angleMode(p.DEGREES);
-        p.background(50); // Only called once to set initial background
+        p.background(50);
       };
 
-      // Resize canvas when window resizes
       p.windowResized = () => {
         const headerHeight = 50;
         const controlsHeight = 100;
@@ -40,14 +38,14 @@ const App = () => {
           (headerHeight + controlsHeight + footerHeight + padding);
         const size = Math.min(window.innerWidth * 0.9, availableHeight);
         p.resizeCanvas(size, size);
-        p.background(50); // Redraw background to avoid artifacts
+        p.background(50);
       };
 
       p.draw = () => {
-        const symmetry = symmetryRef.current; // Get current symmetry value
+        const symmetry = symmetryRef.current;
         const angle = 360 / symmetry;
-        const currentColor = colorRef.current; // Get current color value
-        const currentMode = modeRef.current; // Get current drawing mode
+        const currentColor = colorRef.current;
+        const currentMode = modeRef.current;
 
         p.translate(p.width / 2, p.height / 2);
 
@@ -65,21 +63,21 @@ const App = () => {
           if (p.mouseIsPressed === true) {
             for (let i = 0; i < symmetry; i++) {
               p.rotate(angle);
-              p.stroke(currentColor); // Use the dynamic color
+              p.stroke(currentColor);
               p.strokeWeight(3);
-              p.noFill(); // Outline only
+              p.noFill();
 
               if (currentMode === "line") {
-                p.line(x, y, px, py); // Draw line
+                p.line(x, y, px, py);
               } else if (currentMode === "dot") {
-                p.point(x, y); // Draw dot
+                p.point(x, y);
               } else if (currentMode === "square") {
                 p.rectMode(p.CENTER);
-                p.rect(x, y, 20, 20); // Draw square
+                p.rect(x, y, 20, 20);
               } else if (currentMode === "circle") {
-                p.ellipse(x, y, 20, 20); // Draw circle
+                p.ellipse(x, y, 20, 20);
               } else if (currentMode === "triangle") {
-                p.triangle(x, y, x - 15, y + 20, x + 15, y + 20); // Draw triangle
+                p.triangle(x, y, x - 15, y + 20, x + 15, y + 20);
               }
 
               p.push();
@@ -103,41 +101,33 @@ const App = () => {
       };
     };
 
-    // Initialize p5 instance once
     p5InstanceRef.current = new p5(sketch, sketchRef.current);
 
-    // Cleanup on unmount
     return () => {
       p5InstanceRef.current.remove();
     };
-  }, []); // Empty dependency array: runs once on mount
+  }, []);
 
-  // Handle symmetry change
   const handleSymmetryChange = (event) => {
-    symmetryRef.current = Number(event.target.value); // Update ref directly
+    symmetryRef.current = Number(event.target.value);
   };
 
-  // Handle color change
   const handleColorChange = (event) => {
-    colorRef.current = event.target.value; // Update ref directly with hex color
+    colorRef.current = event.target.value;
   };
 
-  // Handle mode change
   const handleModeChange = (event) => {
-    modeRef.current = event.target.value; // Update ref directly
+    modeRef.current = event.target.value;
   };
 
-  // Handle clear canvas
   const handleClearCanvas = () => {
-    p5InstanceRef.current.background(50); // Clears to dark grey
+    p5InstanceRef.current.background(50);
   };
 
-  // Handle download canvas
   const handleDownload = () => {
-    p5InstanceRef.current.saveCanvas("my-drawing", "png"); // Downloads as PNG
+    p5InstanceRef.current.saveCanvas("my-drawing", "png");
   };
 
-  // Generate symmetry options from 2 to 30 with step 2
   const symmetryOptions = [];
   for (let i = 2; i <= 30; i += 2) {
     symmetryOptions.push(
@@ -147,7 +137,6 @@ const App = () => {
     );
   }
 
-  // Drawing mode options
   const modeOptions = [
     { value: "line", label: "Line" },
     { value: "dot", label: "Dot" },

@@ -51,7 +51,6 @@ body {
   padding: 0;
   height: 100%;
   overflow: hidden;
-  /* Hides scrollbars */
 }
 
 /* Container for the entire app */
@@ -60,13 +59,12 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  /* Distributes space evenly */
   height: 100vh;
-  /* Full viewport height */
-  padding: 16px;
+  padding: 20px;
   box-sizing: border-box;
   overflow: hidden;
-  /* Extra safety to hide scrollbars */
+  max-width: 100vw;
+  /* Ensures container doesn’t exceed viewport width */
 }
 
 /* Canvas styling */
@@ -74,17 +72,16 @@ body {
   display: block;
   max-width: 100%;
   /* Prevents overflow horizontally */
+  margin: 0 auto;
+  /* Centers the canvas horizontally */
   /* cursor: url('/pen.png') 0 16, auto; */
-  /* Uncomment for pen cursor */
   /* cursor: url('/dot.png') 8 8, auto; */
-  /* Uncomment for dot cursor */
 }
 
 /* Header styling */
 .header {
   text-align: center;
   flex-shrink: 0;
-  /* Prevents shrinking */
 }
 
 .header h1 {
@@ -96,19 +93,21 @@ body {
 .controls {
   display: flex;
   flex-wrap: wrap;
-  /* Allows controls to wrap on small screens */
   justify-content: center;
   gap: 10px;
-  /* Space between elements */
   flex-shrink: 0;
-  /* Prevents shrinking */
+  max-width: 100%;
+  /* Prevents controls from overflowing */
+  padding: 0 10px;
+  /* Adds padding to avoid edge-touching */
+  box-sizing: border-box;
 }
 
 .controls label,
 .controls select,
 .controls input[type="color"],
 .controls button {
-  font-size: 14px;
+  font-size: 12px;
   padding: 5px;
 }
 
@@ -120,13 +119,11 @@ body {
   .controls input[type="color"],
   .controls button {
     font-size: 14px;
-    /* Slightly smaller text */
     padding: 3px;
   }
 
   .header h1 {
     font-size: 20px;
-    /* Smaller title */
   }
 }
 
@@ -136,12 +133,10 @@ body {
   font-size: 14px;
   color: #666;
   flex-shrink: 0;
-  /* Prevents shrinking */
 }
 
 @media (max-width: 600px) {
   .footer {
     font-size: 12px;
-    /* Smaller footer text */
   }
 }
