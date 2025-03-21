@@ -12,12 +12,35 @@ const App = () => {
   useEffect(() => {
     const sketch = (p) => {
       p.setup = () => {
+        // Calculate available height: viewport height minus header, controls, footer, and padding
+        const headerHeight = 50; // Approximate height of header
+        const controlsHeight = 100; // Approximate height of controls (adjust as needed)
+        const footerHeight = 30; // Approximate height of footer
+        const padding = 40; // Total padding/margins
+        const availableHeight =
+          window.innerHeight -
+          (headerHeight + controlsHeight + footerHeight + padding);
+        const size = Math.min(window.innerWidth * 0.9, availableHeight); // 90% of width or available height, whichever is smaller
+        p.createCanvas(size, size);
         p.describe(
           `Dark grey canvas that reflects ${modeRef.current}s drawn within it in ${symmetryRef.current} sections.`,
         );
-        p.createCanvas(1000, 1000);
         p.angleMode(p.DEGREES);
         p.background(50); // Only called once to set initial background
+      };
+
+      // Resize canvas when window resizes
+      p.windowResized = () => {
+        const headerHeight = 50;
+        const controlsHeight = 100;
+        const footerHeight = 30;
+        const padding = 40;
+        const availableHeight =
+          window.innerHeight -
+          (headerHeight + controlsHeight + footerHeight + padding);
+        const size = Math.min(window.innerWidth * 0.9, availableHeight);
+        p.resizeCanvas(size, size);
+        p.background(50); // Redraw background to avoid artifacts
       };
 
       p.draw = () => {
@@ -134,11 +157,11 @@ const App = () => {
   ];
 
   return (
-    <div>
+    <div className="app-container">
       <header className="header">
-        <h1>Kaleidoscope</h1> {/* Add your title here */}
+        <h1>Kaleidoscope</h1>
       </header>
-      <div>
+      <div className="controls">
         <label htmlFor="symmetry-select">Symmetry: </label>
         <select
           id="symmetry-select"
@@ -150,7 +173,7 @@ const App = () => {
         <label htmlFor="mode-select">Mode: </label>
         <select
           id="mode-select"
-          defaultValue="line" // Default to line
+          defaultValue="line"
           onChange={handleModeChange}
         >
           {modeOptions.map((option) => (
@@ -163,7 +186,7 @@ const App = () => {
         <input
           id="color-picker"
           type="color"
-          defaultValue="#ffffff" // Default white
+          defaultValue="#ffffff"
           onChange={handleColorChange}
         />
         <button onClick={handleClearCanvas}>Clear Canvas</button>
