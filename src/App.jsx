@@ -8,6 +8,8 @@ const App = () => {
   const symmetryRef = useRef(6); // Use ref to share symmetry with p5
   const colorRef = useRef("#ffffff"); // Use ref to share color with p5, default white
   const modeRef = useRef("line"); // Use ref to share drawing mode, default line
+  const startPosRef = useRef(null); // Track starting position for straight line
+  const isShiftPressedRef = useRef(false); // Track Shift key state
 
   useEffect(() => {
     const sketch = (p) => {
@@ -41,6 +43,23 @@ const App = () => {
         p.background(50);
       };
 
+      p.keyPressed = () => {
+        if (p.keyCode === p.SHIFT) {
+          isShiftPressedRef.current = true;
+          startPosRef.current = {
+            x: p.mouseX - p.width / 2,
+            y: p.mouseY - p.height / 2,
+          };
+        }
+      };
+
+      p.keyReleased = () => {
+        if (p.keyCode === p.SHIFT) {
+          isShiftPressedRef.current = false;
+          startPosRef.current = null;
+        }
+      };
+
       p.draw = () => {
         const symmetry = symmetryRef.current;
         const angle = 360 / symmetry;
@@ -59,7 +78,6 @@ const App = () => {
           let y = p.mouseY - p.height / 2;
           let px = p.pmouseX - p.width / 2;
           let py = p.pmouseY - p.height / 2;
-
           if (p.mouseIsPressed === true) {
             for (let i = 0; i < symmetry; i++) {
               p.rotate(angle);
@@ -68,7 +86,11 @@ const App = () => {
               p.noFill();
 
               if (currentMode === "line") {
-                p.line(x, y, px, py);
+                if (isShiftPressedRef.current && startPosRef.current) {
+                  p.line(startPosRef.current.x, startPosRef.current.y, x, y);
+                } else {
+                  p.line(x, y, px, py);
+                }
               } else if (currentMode === "dot") {
                 p.point(x, y);
               } else if (currentMode === "square") {
@@ -83,7 +105,11 @@ const App = () => {
               p.push();
               p.scale(1, -1);
               if (currentMode === "line") {
-                p.line(x, y, px, py);
+                if (isShiftPressedRef.current && startPosRef.current) {
+                  p.line(startPosRef.current.x, startPosRef.current.y, x, y);
+                } else {
+                  p.line(x, y, px, py);
+                }
               } else if (currentMode === "dot") {
                 p.point(x, y);
               } else if (currentMode === "square") {
