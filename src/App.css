@@ -50,7 +50,6 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden;
 }
 
 /* Container for the entire app */
@@ -101,6 +100,7 @@ body {
   padding: 0 10px;
   /* Adds padding to avoid edge-touching */
   box-sizing: border-box;
+  align-items: center;
 }
 
 .controls label,
@@ -113,6 +113,16 @@ body {
 
 /* Adjust controls for smaller screens */
 @media (max-width: 600px) {
+
+  #root {
+    padding: 0px;
+  }
+
+  .app-container {
+    padding: 0px
+  }
+
+  ;
 
   .controls label,
   .controls select,
