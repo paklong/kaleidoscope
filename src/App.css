@@ -152,6 +152,15 @@ body {
   height: auto;
 }
 
+@media (max-width: 600px) {
+
+  .instructions {
+    text-align: center;
+    font-size: 12px;
+    height: auto;
+  }
+}
+
 p {
   margin: 0;
   /* Remove default <p> margins */
