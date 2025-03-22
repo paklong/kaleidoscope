@@ -5,7 +5,7 @@ import "./App.css";
 const App = () => {
   const sketchRef = useRef();
   const p5InstanceRef = useRef(null);
-  const symmetryRef = useRef(6);
+  const symmetryRef = useRef(12);
   const colorRef = useRef("#ffffff");
   const modeRef = useRef("line");
   const startPosRef = useRef(null);
@@ -180,7 +180,7 @@ const App = () => {
         <label htmlFor="symmetry-select">Symmetry: </label>
         <select
           id="symmetry-select"
-          defaultValue={6}
+          defaultValue={12}
           onChange={handleSymmetryChange}
         >
           {symmetryOptions}
