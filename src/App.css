@@ -149,3 +149,16 @@ body {
     font-size: 12px;
   }
 }
+
+.instructions {
+  text-align: center;
+  font-size: 14px;
+  height: auto
+}
+
+p {
+  margin: 0;
+  /* Remove default <p> margins */
+}
+
+.instructions strong {}

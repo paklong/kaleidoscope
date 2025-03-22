@@ -4,12 +4,12 @@ import "./App.css";
 
 const App = () => {
   const sketchRef = useRef();
-  const p5InstanceRef = useRef(null); // Store p5 instance
-  const symmetryRef = useRef(6); // Use ref to share symmetry with p5
-  const colorRef = useRef("#ffffff"); // Use ref to share color with p5, default white
-  const modeRef = useRef("line"); // Use ref to share drawing mode, default line
-  const startPosRef = useRef(null); // Track starting position for straight line
-  const isShiftPressedRef = useRef(false); // Track Shift key state
+  const p5InstanceRef = useRef(null);
+  const symmetryRef = useRef(6);
+  const colorRef = useRef("#ffffff");
+  const modeRef = useRef("line");
+  const startPosRef = useRef(null);
+  const isShiftPressedRef = useRef(false);
 
   useEffect(() => {
     const sketch = (p) => {
@@ -208,6 +208,13 @@ const App = () => {
         <button onClick={handleDownload}>Download</button>
       </div>
       <div ref={sketchRef} className="sketch-canvas" />
+      <div className="instructions">
+        <p>
+          Hold <strong>Shift</strong> while drawing in Line mode to create
+          fanlike straight lines
+        </p>
+      </div>
+
       <footer className="footer">
         <p>Contact: paklong2556@gmail.com</p>
       </footer>
